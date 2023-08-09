@@ -9,8 +9,8 @@ export default function RegisterPage() {
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-100 h-130">
                 <div className="login-container">
                     <h1 className="text-black flex items-center justify-center">
-                       
-                       Register  
+
+                        Register
                         <img src="/images/editar.png" alt="Editar" className="h-6 w-6 mr-2 ml-2" />
                     </h1>
 
