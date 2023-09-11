@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    box-sizing: border-box !important;
+   
+}
+.svg_goTo{
+    display: revert;
+}
