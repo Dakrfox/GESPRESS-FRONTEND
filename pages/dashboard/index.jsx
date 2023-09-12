@@ -1,7 +1,5 @@
 import React from "react";
 import Header from "@components/Header";
-import Barchart from "@/components/charts/BarChart";
-import Footer from "@components/Footer/Footer";
 import LinearChart from "@/components/charts/LinearChart";
 import DoughnutChart from "@/components/charts/DoughnutChart";
 import { PiEye } from "react-icons/pi";
@@ -24,7 +22,7 @@ export default function Dashboard() {
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="0.99"
+            strokeWidth="1"
             d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
           />
          
@@ -82,7 +80,7 @@ export default function Dashboard() {
         <TableComponent />
       </div>
 
-      <Footer />
+  
     </>
   );
 }
