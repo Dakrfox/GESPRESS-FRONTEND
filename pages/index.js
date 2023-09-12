@@ -1,118 +1,212 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [hoursRef, minutesRef, secondsRef] = Array(3).fill(useRef(null))
+  const router = useRouter();
+  const [hours, setHours] = useState(23);
+  const [minutes, setMinutes] = useState(59);
+  const [seconds, setSeconds] = useState(10);
+  useEffect(() => {
+    // Función para actualizar el contador cada segundo
+    const updateCounter = () => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      } else {
+        if (minutes > 0) {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        } else {
+          if (hours > 0) {
+            setHours(hours - 1);
+            setMinutes(59);
+            setSeconds(59);
+          }
+        }
+      }
+    };
+
+    // Actualiza el contador cada segundo
+    const interval = setInterval(updateCounter, 1000);
+
+    // Limpia el intervalo cuando el componente se desmonta
+    return () => clearInterval(interval);
+  }, [hours, minutes, seconds]);
+  const formatTime = (value) => (value < 10 ? `0${value}` : value);
+  useEffect(() => {
+    hoursRef.current.style.setProperty('--value', hours);
+    minutesRef.current.style.setProperty('--value', minutes);
+    secondsRef.current.style.setProperty('--value', seconds);
+  }, [hours, minutes, seconds]);
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className={`${inter.className}`}>
+      <div data-theme="light">
+        <div
+          className="hero min-h-screen"
+          style={{ backgroundImage: "url(/images/bg.webp)" }}
+        >
+          <div className="hero-overlay bg-opacity-60"></div>
+          <div className="hero-content text-center text-neutral-content">
+            <div className="max-w-md">
+              <h1 className="mb-5 text-5xl font-bold">Budget managment App</h1>
+              <p className="mb-5">
+                Unlock financial freedom with our app, where managing your
+                budget becomes a journey of empowerment and financial clarity.
+              </p>
+              <button
+                className="btn glass text-gray-300 hover:text-gray-900 mr-10"
+                onClick={() => router.push("/Login")}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-info text-gray-900 hover:text-gray-300"
+                onClick={() => router.push("/Register")}
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
+        {/** section 2 */}
+        <div className="w-100 h-screen flex justify-center items-center flex-col mt-10">
+          <h1 className="text-4xl font-bold text-center">
+            What is Budget Management App?
+          </h1>
+          <p className="text-center mt-5 ml-10 mr-10 ">
+            Budget Management App is a simple budgeting app that allows you to
+            manage your budget, income and expenses.
           </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
+          <p className="text-center mb-15  ml-10 mr-10">
+            In just
           </p>
-        </a>
+          <span className="countdown font-mono text-4xl m-10">
+            <span ref={hoursRef} style={{ '--value': hours }}></span>:
+            <span ref={minutesRef} style={{ '--value': minutes }}></span>:
+            <span ref={secondsRef} style={{ '--value': seconds }}></span>
+          </span>
+          <p className="text-center mb-10  ml-10 mr-10">You will have all the app experience in a free account creation. what are you waiting for?</p>
+          <ul className="steps steps-vertical lg:steps-horizontal">
+            <li className="step step-primary">Register for 24hr</li>
+            <li className="step step-primary">Track your incomes and Expenses</li>
+            <li className="step step-primary">Define your saving goals</li>
+            <li className="step step-primary">Use our budget calculation or set your own</li>
+          </ul>
+        </div>
+        {/** section 3  */}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
+        <div className="w-100 h-screen flex justify-center items-center flex-col">
+          <h1 className="text-4xl font-bold text-center ">
+            Is this worth it?
+          </h1>
+          <p className="text-center mt-5 ml-10 mr-10 mb-10">
+            Money is more than just numbers; it's the key to achieving your dreams and aspirations. <br />
+            Our cutting-edge budget management app is here to help you <br />
+            take control of your financial journey
+            like never before..
           </p>
-        </a>
+          <div className="card sm:card-side bg-base-100 shadow-xl">
+            <figure><Image src="/images/monitor.webp" width={350} height={350} alt="monitor" /></figure>
+            <div className="card-body">
+              <h2 className="card-title">Manage your budgets</h2>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+              <ul className="list-disc text-sm space-y-4">
+                <li>
+                  <p>Track your expenses and incomes.</p>
+                </li>
+
+                <li>
+                  <p>Manage your saving goals.</p>
+                </li>
+
+                <li>
+                  <p>Visualize your movements with charts.</p>
+                </li>
+
+                <li>
+                  <p>Adjust and specify the variables for your budget.</p>
+                </li>
+
+                <li>
+                  <p>Take control of your finances and your life.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {/** section 4  */}
+        <div className="pl-20 pr-20 h-screen flex justify-center items-center flex-col">
+          <h1 className="text-4xl font-bold text-center">
+            FAQs about Budget Management App
+          </h1>
+          <div className="flex flex-col justify-center items-center mt-10 mt-10 w-full text-center">
+
+            <div className="collapse mb-5 text-xl border-2 border-grey-500">
+              <input type="checkbox" className="peer" />
+              <div className="collapse-title peer-checked:bg-secondary peer-checked:text-secondary-content">
+                Why does the account only last 24 hours?
+              </div>
+              <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                <p>Our application shows a demo of how to use our app and be able to test it so that you, as a user and potential client, can know if it meets your needs or not.
+                  We do not offer budget management service, our purpose is to sell the code for commercial or personal use and a technical support and/or development service group.</p>
+              </div>
+            </div>
+
+            <div className="collapse mb-5 text-xl border-2 border-grey-500">
+              <input type="checkbox" className="peer" />
+              <div className="collapse-title peer-checked:bg-secondary peer-checked:text-secondary-content">
+                What happens to my data after 24 hours?
+
+              </div>
+              <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                <p>
+                  Your data will be permanently deleted from the app.
+                  Likewise, you can also create a new account with the same email and data.
+                  The application is for testing purposes only.</p>
+              </div>
+            </div>
+
+            <div className="collapse mb-5 text-xl border-2 border-grey-500">
+              <input type="checkbox" className="peer" />
+              <div className="collapse-title peer-checked:bg-secondary peer-checked:text-secondary-content">
+
+                How do savings goals affect the budget?
+              </div>
+              <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                <p>
+                  Savings goals can be very subjective when creating a budget. On the one hand, there are people who take into account the money allocated to savings goals as part of the balance sheet and want this to be part of the budget calculation. On the other hand, there are those who use savings goals as money that cannot be considered available money and that cannot be manipulated for purposes other than those created.</p>
+              </div>
+            </div>
+
+            <div className="collapse mb-5 text-xl border-2 border-grey-500">
+              <input type="checkbox" className="peer" />
+              <div className="collapse-title peer-checked:bg-secondary peer-checked:text-secondary-content">
+                What after-sales services do they offer?              </div>
+              <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                <p>In the sale you will receive a technical and general documentation of the application, you will also have a guide oriented for correct use made by the developers themselves. You will have a 3-month satisfaction guarantee where our developers will be at your disposal to handle any errors or bugs that occur in the application.
+                  Lastly, you will receive software updates for the next 3 years, which ensures greater security reliability and updated libraries.</p>
+              </div>
+            </div>
+
+            <div className="collapse mb-5 text-xl border-2 border-grey-500">
+              <input type="checkbox" className="peer" />
+              <div className="collapse-title peer-checked:bg-secondary peer-checked:text-secondary-content">
+                What if I have to make changes to meet my needs?
+              </div>
+              <div className="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+                <p>Any feature you want to add that is not found in the application code will have an extra charge, since it will require developers' labor to create it, implement it and ensure that it meets expectations.</p>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        {/** end light theme*/}
       </div>
     </main>
-  )
+  );
 }
