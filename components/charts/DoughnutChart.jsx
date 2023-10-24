@@ -27,8 +27,8 @@ export const data = {
 
 export default function DoughnutChart() {
     return (
-      <div className="card w-96 glass">
-        <Doughnut data={data} />
+      <div className="card glass flex justify-center items-center">
+        <Doughnut data={data} className="Initial_chart_2"/>
       </div>
     );
   }

@@ -40,14 +40,14 @@ export const data = {
     {
       data: [100],
       label: "Incomes",
-      borderColor: 'rgba(34, 197, 94, 1)',
+      borderColor: "rgba(34, 197, 94, 1)",
       backgroundColor: "rgb(109, 253, 181,0.5)",
       borderWidth: 2,
     },
     {
       data: [50],
       label: "Outgoings",
-      borderColor: 'rgba(239, 68, 68, 1)',
+      borderColor: "rgba(239, 68, 68, 1)",
       backgroundColor: "rgb(75, 192, 192,0.5)",
       borderWidth: 2,
     },
@@ -56,13 +56,8 @@ export const data = {
 
 export default function Barchart() {
   return (
-    <div className="card w-96 glass">
-      <Bar options={options} data={data} />
-      <div className="card-body">
-        <div className="card-actions justify-center">
-          <button className="btn btn-primary">Go To Page</button>
-        </div>
-      </div>
+    <div className="card glass flex justify-center items-center">
+      <Bar options={options} data={data} className="Initial_chart" />
     </div>
   );
 }

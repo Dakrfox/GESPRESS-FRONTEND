@@ -57,8 +57,8 @@ export const data = {
         
 export default function LinearChart() {
   return (
-    <div className="card glass ">
-      <Line options={options} data={data} />
+    <div className="card glass flex justify-center items-center">
+      <Line options={options} data={data}  className="Initial_chart" />
     </div>
   );
 }

@@ -9,3 +9,12 @@
 .svg_goTo{
     display: revert;
 }
+
+.Initial_chart{
+    width: 100%;
+    height: 300px !important;
+}
+.Initial_chart_2{
+    width: 100%;
+    height: 400px !important;
+}

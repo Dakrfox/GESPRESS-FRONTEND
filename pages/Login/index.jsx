@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function LoginPage() {
   const loginURL = 'http://localhost:8000/api/auth/Login';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter()
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -63,6 +65,7 @@ export default function LoginPage() {
               className="input input-bordered w-full max-w-xs bg-white text-black  focus:bg-white hover:border-blue-500 "
               value={password}
               onChange={handlePasswordChange}
+              
             />
           </div>
           <br />
@@ -72,7 +75,8 @@ export default function LoginPage() {
           <br />
           <button
             className="btn bg-blue-400 w-98 w-full"
-            onClick={handleSubmit}
+            onClick={()=>router.push("/Incomes")}
+            
           >
             Login
           </button>
